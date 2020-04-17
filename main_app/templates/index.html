@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wacky Widgets </title>
+</head>
+
+<body>
+    <h1> Wacky Widgets</h1>
+{% if list|length == 0 %} 
+    <h3>No Widgets Exist</h3>
+{% else %}
+
+  <table class ="pure-table pure-table-striped">
+    <tr>
+      <thead>
+      <th> Description</th>
+      <th>Quantity</th>
+      <th>Delete</th>
+      </thead>
+    </tr>
+{% for widget in list %}
+    <tr>
+        <td> {{widget.description }}</td>
+        <td> {{widget.quantity}}</td>
+        <td><a href="{% url 'delete' widget_id=widget.id %}">X</a></td>
+    </tr>
+{% endfor %} 
+</table>
+{% endif %}
+<hr> 
+<h4> Add Widget</h4>
+
+<form action='{% url "add" %}' method="POST" class="pure-form">
+    {% csrf_token %}
+    {{widget_form.as_p}}
+    <input type="submit" class="pure-button" value="Add WIDGET"></input>
+</form> 
+
+</body>
+</html>
+
+<style>
+body {
+    text-align: center;
+    margin: 2rem;
+}
+label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+table {
+    margin: 2rem auto;
+}
+
+table a {
+    color: red;
+    text-decoration: none;
+}
+</style>
